@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Commom.Domain\Commom.Domain.csproj" />
+    <ProjectReference Include="..\Common\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\Shop\Shop.Domain\Shop.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
