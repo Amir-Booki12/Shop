@@ -28,6 +28,17 @@ namespace Shop.Domain.OrderAgg
             PriceGuord(newPrice);
             Price = newPrice;
         }
+        public void IncreaseCount(int count)
+        {
+            Count += count;
+        }
+        public void DecreaseCount(int count)
+        {
+            if (count == 1 || Count - count <= 0)
+                return;
+
+            Count -= count;
+        }
         public void ChengeCount(int newCount)
         {
             CountGuord(newCount);

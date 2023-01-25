@@ -1,9 +1,11 @@
 ﻿using Commom.Domain;
+using Commom.Domain.Exceptions;
 using Shop.Domain.OrderAgg.Enums;
 using Shop.Domain.OrderAgg.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,17 +53,45 @@ namespace Shop.Domain.OrderAgg
         }
         public void AddItem(OrderItem item)
         {
+            ChangeOrderGuard();
+
+            var oldItem = Items.FirstOrDefault(f => f.InvertoryId == item.InvertoryId);
+            if (oldItem != null)
+            {
+                oldItem.ChengeCount(item.Count + oldItem.Count);
+                return;
+            }
             Items.Add(item);
         }
         public void RemoveItem(int itemId)
         {
+            ChangeOrderGuard();
             var order = Items.FirstOrDefault(i=>i.Id == itemId);
             if (order == null)
-                throw new InvalidDataException();  
+                throw new InvalidDataException();
+            Items.Remove(order);
         }
+        public void IncreaseItemCount(int count,long itemId)
+        {
+            ChangeOrderGuard();
+            var orderItem = Items.FirstOrDefault(i=>i.Id==itemId);
+            if (orderItem == null)
+                return;
+            orderItem.IncreaseCount(count);
 
+        }
+        public void DecreaseItemCount(int count, long itemId)
+        {
+            ChangeOrderGuard();
+            var orderItem = Items.FirstOrDefault(i => i.Id == itemId);
+            if (orderItem == null)
+                return;
+            orderItem.DecreaseCount(count);
+
+        }
         public void ChengeCountItem(int itemId,int newCount)
         {
+            ChangeOrderGuard();
             var order = Items.FirstOrDefault(i => i.Id == itemId);
             if (order == null)
                 throw new InvalidDataException();
@@ -72,6 +102,11 @@ namespace Shop.Domain.OrderAgg
         public void CheckOut(OrderAddress address)
         {
             Addresses = address;
+        }
+        public void ChangeOrderGuard()
+        {
+            if (Status != OrderStatus.Pennding)
+                throw new InvalidDomainDataException("امکان ویرایش این سفارش وجود ندارد");
         }
     }
 }
