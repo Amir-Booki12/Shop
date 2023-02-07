@@ -1,6 +1,7 @@
 ﻿using Commom.Domain;
 using Commom.Domain.Exceptions;
 using Shop.Domain.SellerAgg.Enums;
+using Shop.Domain.SellerAgg.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,14 @@ namespace Shop.Domain.SellerAgg
         {
 
         }
-        public Seller(long userId, string shopName, string nationalCode)
+        public Seller(long userId, string shopName, string nationalCode, ISellerDomainService domainService)
         {
             Guord(shopName, nationalCode);
             UserId = userId;
             ShopName = shopName;
             NationalCode = nationalCode;
+            if (domainService.CheckSellerInfo(this) == false)
+                throw new InvalidDomainDataException("اطلاعات نامعتبر است");
         }
 
         public long UserId { get; internal set; }
@@ -35,12 +38,14 @@ namespace Shop.Domain.SellerAgg
             Status = status;
             LastUpdate = DateTime.Now;
         }
-        public void Edit(string shopName, string nationalCode)
+        public void Edit(string shopName, string nationalCode, ISellerDomainService domainService)
         {
             Guord(shopName, nationalCode);
             ShopName = shopName;
             NationalCode = nationalCode;
-        }
+            if (domainService.NationalCodeExistInDataBase(nationalCode))
+                throw new NullOrEmptyDomainDataException("کد ملی مشخض به فرد دیگری استت");
+         }
 
         public void AddInvertory(SellerInvertory invertoriy)
         {
@@ -48,24 +53,17 @@ namespace Shop.Domain.SellerAgg
                 throw new InvalidDomainDataException();
             Invertories.Add(invertoriy);
         }
-        public void EditInvertory(SellerInvertory invertoriy)
+        public void EditInvertory(long invertoryId,int price,int count,int? discountParcentAge)
         {
-            var oldInvertory = Invertories.FirstOrDefault(f=>f.Id==invertoriy.Id);
-            if(oldInvertory==null)
-                throw new InvalidDomainDataException("محصول یافت نشد");
-
-            Invertories.Remove(oldInvertory);
-            Invertories.Add(invertoriy);
-        }
-
-        public void RemoveInvertory(long invertoriyId)
-        {
-            var oldInvertory = Invertories.FirstOrDefault(f => f.Id == invertoriyId);
+            var oldInvertory = Invertories.FirstOrDefault(f => f.Id == invertoryId);
             if (oldInvertory == null)
                 throw new InvalidDomainDataException("محصول یافت نشد");
-            Invertories.Remove(oldInvertory);
+
+            oldInvertory.Edit(price,count,discountParcentAge);
         }
-            public void Guord(string shopName, string nationalCode)
+
+       
+        public void Guord(string shopName, string nationalCode)
         {
             NullOrEmptyDomainDataException.CheckString(shopName, nameof(shopName));
             NullOrEmptyDomainDataException.CheckString(nationalCode, nameof(nationalCode));

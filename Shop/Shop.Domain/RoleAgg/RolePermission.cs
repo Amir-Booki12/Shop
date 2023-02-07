@@ -5,9 +5,9 @@ namespace Shop.Domain.RoleAgg
 {
     public class RolePermission:BaseEntity
     {
-        public RolePermission(long roleId)
+        public RolePermission(PermissionType permission)
         {
-            RoleId = roleId;
+            Permission = permission;
         }
 
         public long RoleId { get;internal set; }

@@ -17,6 +17,7 @@ namespace Shop.Domain.ProductAgg
             long categoryId, long subCategoryId, long secendrySubCategoryId, SeoData seoData
             ,IProductDomainService domainService)
         {
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
             Guord(title, description, slug, domainService);
             Title = title;
             ImageName = imageName;
@@ -38,13 +39,12 @@ namespace Shop.Domain.ProductAgg
         public List<ProductImage> ProductImages { get; private set; }
         public List<ProductSpecification> ProductSpecifications { get; private set; }
 
-        public void Edit(string title, string imageName, string description, string slug,
+        public void Edit(string title, string description, string slug,
             long categoryId, long subCategoryId, long secendrySubCategoryId, SeoData seoData
             , IProductDomainService domainService)
         {
             Guord(title, description, slug, domainService);
             Title = title;
-            ImageName = imageName;
             Description = description;
             Slug = slug.ToSlug();
             CategoryId = categoryId;
@@ -52,7 +52,12 @@ namespace Shop.Domain.ProductAgg
             SecendrySubCategoryId = secendrySubCategoryId;
             SeoData = seoData;
         }
+        public void SetImageProduct(string imageName)
+        {
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+            ImageName = imageName;
 
+        }
 
         public void AddImage(ProductImage image)
         {
