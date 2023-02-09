@@ -6,7 +6,7 @@ namespace Shop.Domain.UserAgg
 {
     public class UserAddress : BaseEntity
     {
-        public UserAddress(string shire, string city, string postalCode, string postAdress, string nationalCode, string name, string family,string phoneNumber)
+        public UserAddress(string shire, string city, string postalCode, string postAdress, string nationalCode, string name, string family, PhoneNumber phoneNumber)
         {
             Guord(shire, city, postalCode, postAdress,
                  nationalCode, name, family, phoneNumber);
@@ -17,6 +17,7 @@ namespace Shop.Domain.UserAgg
             NationalCode = nationalCode;
             Name = name;
             Family = family;
+            PhoneNumber = phoneNumber;
             AddressActive = false;
         }
 
@@ -28,7 +29,7 @@ namespace Shop.Domain.UserAgg
         public string NationalCode { get; private set; }
         public string Name { get; private set; }
         public string Family { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public PhoneNumber PhoneNumber { get; private set; }
         public bool AddressActive { get; private set; }
 
 
@@ -38,7 +39,7 @@ namespace Shop.Domain.UserAgg
             AddressActive = true;
         }
         public void Edit(string shire, string city, string postalCode, string postAdress,
-            string nationalCode, string name, string family, string phoneNumber)
+            string nationalCode, string name, string family, PhoneNumber phoneNumber)
         {
             Guord(shire, city, postalCode, postAdress,
                  nationalCode, name, family, phoneNumber);
@@ -55,7 +56,7 @@ namespace Shop.Domain.UserAgg
 
 
         public void Guord(string shire, string city, string postalCode, string postAdress,
-            string nationalCode, string name, string family, string phoneNumber)
+            string nationalCode, string name, string family, PhoneNumber phoneNumber)
         {
             NullOrEmptyDomainDataException.CheckString(shire, nameof(shire));
             NullOrEmptyDomainDataException.CheckString(city, nameof(city));
@@ -64,7 +65,7 @@ namespace Shop.Domain.UserAgg
             NullOrEmptyDomainDataException.CheckString(nationalCode, nameof(nationalCode));
             NullOrEmptyDomainDataException.CheckString(name, nameof(name));
             NullOrEmptyDomainDataException.CheckString(family, nameof(family));
-            NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
+            
 
             if (!IranianNationalIdChecker.IsValid(nationalCode))
             {

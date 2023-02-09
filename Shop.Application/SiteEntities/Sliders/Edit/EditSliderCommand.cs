@@ -56,7 +56,7 @@ namespace Shop.Application.SiteEntities.Sliders.Edit
             return OperationResult.Success();
         }
 
-        private void RemoveOldImage(IFormFile imgaeFile, string oldImage)
+        private void RemoveOldImage(IFormFile? imgaeFile, string oldImage)
         {
             if (imgaeFile != null)
             {

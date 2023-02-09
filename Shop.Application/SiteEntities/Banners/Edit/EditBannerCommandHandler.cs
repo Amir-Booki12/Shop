@@ -35,7 +35,7 @@ namespace Shop.Application.SiteEntities.Banners.Edit
 
         }
 
-        private void RemoveOldImage(IFormFile imgaeFile,string oldImage)
+        private void RemoveOldImage(IFormFile? imgaeFile,string oldImage)
         {
             if(imgaeFile != null)
             {
