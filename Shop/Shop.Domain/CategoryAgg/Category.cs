@@ -13,6 +13,7 @@ namespace Shop.Domain.CategoryAgg
 {
     public class Category:AggregateRoot
     {
+       
         public string Title { get; private set; }
         public string Slug { get; private set; }
         public SeoData SeoData { get; private set; }
@@ -26,6 +27,7 @@ namespace Shop.Domain.CategoryAgg
             Title = title;
             Slug = slug;
             SeoData = seoData;
+            Childs = new List<Category>();
         }
         public void Edit(string title, string slug, SeoData seoData, ICategoryDomainService service)
         {

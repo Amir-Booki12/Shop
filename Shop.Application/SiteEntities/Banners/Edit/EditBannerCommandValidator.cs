@@ -9,7 +9,7 @@ namespace Shop.Application.SiteEntities.Banners.Edit
         public EditBannerCommandValidator()
         {
             RuleFor(r => r.ImageFile)
-                .JustImageFile()
+                .JustImageFile();
                
 
             RuleFor(r => r.Link)
