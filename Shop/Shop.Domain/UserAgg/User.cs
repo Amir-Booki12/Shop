@@ -5,6 +5,7 @@ using Shop.Domain.UserAgg.Enums;
 using Shop.Domain.UserAgg.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,6 +15,10 @@ namespace Shop.Domain.UserAgg
 {
     public class User : AggregateRoot
     {
+        private User()
+        {
+
+        }
         public User(string name, string family, string password, string email, PhoneNumber phoneNumber, Gender gender,IDomainUserService domainService)
         {
             Guard(email, phoneNumber, domainService);
@@ -31,6 +36,7 @@ namespace Shop.Domain.UserAgg
         public string Password { get; private set; }
         public string AvatarName { get; private set; }
         public string Email { get; private set; }
+        [NotMapped]
         public PhoneNumber PhoneNumber { get; private set; }
         public Gender Gender { get; private set; }
         public List<UserAddress> Addresses { get; private set; }
@@ -97,8 +103,7 @@ namespace Shop.Domain.UserAgg
         {
             NullOrEmptyDomainDataException.CheckString(email, nameof(email));
             
-            if(phoneNumber==null)
-                throw new InvalidDomainDataException("شماره موبایل معتبر نیست");
+           
 
             if (EmailValidation.IsValidEmail(email) == false)
                 throw new InvalidDomainDataException("ایمیل معتبر نیست");

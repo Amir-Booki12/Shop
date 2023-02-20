@@ -1,15 +1,20 @@
 ﻿using Commom.Domain;
 using Commom.Domain.Exceptions;
 using Commom.Domain.ValueObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shop.Domain.UserAgg
 {
     public class UserAddress : BaseEntity
     {
+        private UserAddress()
+        {
+
+        }
         public UserAddress(string shire, string city, string postalCode, string postAdress, string nationalCode, string name, string family, PhoneNumber phoneNumber)
         {
             Guord(shire, city, postalCode, postAdress,
-                 nationalCode, name, family, phoneNumber);
+                 nationalCode, name, family);
             Shire = shire;
             City = city;
             PostalCode = postalCode;
@@ -29,6 +34,7 @@ namespace Shop.Domain.UserAgg
         public string NationalCode { get; private set; }
         public string Name { get; private set; }
         public string Family { get; private set; }
+        [NotMapped]
         public PhoneNumber PhoneNumber { get; private set; }
         public bool AddressActive { get; private set; }
 
@@ -42,7 +48,7 @@ namespace Shop.Domain.UserAgg
             string nationalCode, string name, string family, PhoneNumber phoneNumber)
         {
             Guord(shire, city, postalCode, postAdress,
-                 nationalCode, name, family, phoneNumber);
+                 nationalCode, name, family);
 
 
             Shire = shire;
@@ -56,7 +62,7 @@ namespace Shop.Domain.UserAgg
 
 
         public void Guord(string shire, string city, string postalCode, string postAdress,
-            string nationalCode, string name, string family, PhoneNumber phoneNumber)
+            string nationalCode, string name, string family)
         {
             NullOrEmptyDomainDataException.CheckString(shire, nameof(shire));
             NullOrEmptyDomainDataException.CheckString(city, nameof(city));
