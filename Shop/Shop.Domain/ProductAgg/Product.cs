@@ -18,7 +18,7 @@ namespace Shop.Domain.ProductAgg
 
         }
         public Product(string title, string imageName, string description, string slug,
-            long categoryId, long subCategoryId, long secendrySubCategoryId, SeoData seoData
+            long categoryId, long subCategoryId, long? secendrySubCategoryId, SeoData seoData
             ,IProductDomainService domainService)
         {
             NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));

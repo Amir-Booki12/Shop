@@ -23,10 +23,4 @@
     <ProjectReference Include="..\Shop.Infrastucure\Shop.Infrastucture.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Products\GetById\" />
-    <Folder Include="Products\GetBySlug\" />
-    <Folder Include="Products\GetByFilter\" />
-  </ItemGroup>
-
 </Project>

@@ -16,9 +16,9 @@ namespace Shop.Query.Products.DTOs
         public string ImageName { get;  set; }
         public string Description { get;  set; }
         public string Slug { get;  set; }
-        public ProductCategoryDto CategoryId { get;  set; }
-        public ProductCategoryDto SubCategoryId { get;  set; }
-        public ProductCategoryDto? SecendrySubCategoryId { get;  set; }
+        public ProductCategoryDto Category { get;  set; }
+        public ProductCategoryDto SubCategory { get;  set; }
+        public ProductCategoryDto? SecendrySubCategory { get;  set; }
         public SeoData SeoData { get;  set; }
         public List<ProductImageDto> ProductImages { get;  set; }
         public List<ProductSpecificationDto> ProductSpecifications { get;  set; }
@@ -32,9 +32,9 @@ namespace Shop.Query.Products.DTOs
     }
     public class ProductFilterParam:BaseFilterParam
     {
-        public string Title { get; set; }
-        public long Id { get; set; }
-        public string Slug { get; set; }
+        public string? Title { get; set; }
+        public long? Id { get; set; }
+        public string? Slug { get; set; }
     }
     public class ProductFilterResult:BaseFilter<ProductFilterData, ProductFilterParam>
     {
