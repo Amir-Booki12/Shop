@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Shop.Query.Orders.GetByFilter
 {
-    public class GetOrderByFilerQuery : QueryFilter<OrderFilterResult, OrderFilterParams>
+    public class GetOrderByFilterQuery : QueryFilter<OrderFilterResult, OrderFilterParams>
     {
-        public GetOrderByFilerQuery(OrderFilterParams filterParams) : base(filterParams)
+        public GetOrderByFilterQuery(OrderFilterParams filterParams) : base(filterParams)
         {
         }
     }

@@ -4,16 +4,16 @@ using Shop.Domain.RoleAgg.Repository;
 
 namespace Shop.Application.Roles.Edit
 {
-    public class EditRolePermissionCommandHandler : IBaseCommandHandler<EditRolePermissionCommand>
+    public class EditRoleCommandHandler : IBaseCommandHandler<EditRoleCommand>
     {
         private readonly IRoleRepository _roleRepository;
 
-        public EditRolePermissionCommandHandler(IRoleRepository roleRepository)
+        public EditRoleCommandHandler(IRoleRepository roleRepository)
         {
             _roleRepository = roleRepository;
         }
 
-        public async  Task<OperationResult> Handle(EditRolePermissionCommand request, CancellationToken cancellationToken)
+        public async  Task<OperationResult> Handle(EditRoleCommand request, CancellationToken cancellationToken)
         {
             var role = await _roleRepository.GetTracking(request.Id);
             if (role == null)

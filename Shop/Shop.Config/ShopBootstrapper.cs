@@ -14,6 +14,7 @@ using MediatR;
 using Shop.Query.Categories.GetById;
 using Shop.Application.Comments.Create;
 using Shop.Application.Roles.Create;
+using Shop.Presentation.Facade;
 
 namespace Shop.Config
 {
@@ -22,6 +23,7 @@ namespace Shop.Config
         public static void RegisterShopDependency(this IServiceCollection  services,string connectionString)
         {
             InfrastuctureBootstrapper.Init(services, connectionString);
+            FacadeBootstrapper.InitFacadeDependency(services);
 
             services.AddMediatR(typeof(Directories).Assembly);
 
@@ -33,7 +35,7 @@ namespace Shop.Config
             services.AddTransient<ISellerDomainService, SellerDomainService>();
 
 
-            services.AddValidatorsFromAssembly(typeof(CreateRolePermissionCommandValidator).Assembly);
+            services.AddValidatorsFromAssembly(typeof(CreateRoleCommandValidator).Assembly);
         }
 
     }

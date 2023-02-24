@@ -47,10 +47,10 @@ namespace Shop.Query.Products
                 {
                     Id = product.SubCategoryId
                 },
-                SecendrySubCategory =product.SecendrySubCategoryId!=null? new ProductCategoryDto()
+                SecendrySubCategory = product.SecendrySubCategoryId != null ? new ProductCategoryDto()
                 {
                     Id = (long)product.SecendrySubCategoryId
-                }:null
+                } : null
             };
 
         }
@@ -69,29 +69,19 @@ namespace Shop.Query.Products
 
         public static async Task SetCategories(this ProductDto product, ShopContext context)
         {
-            var category =await context.Categories.Where(s => s.Id == product.Category.Id)
-                .Select(s => new ProductCategoryDto()
-                {
-                    Id = s.Id,
-                    CreationDate = s.CreationDate,
-                    SeoData = s.SeoData,
-                    Slug = s.Slug,
-                    Title = s.Title
+            var categories = await context.Products.Where(p => p.Id == product.Category.Id ||
+            p.Id == product.SubCategory.Id).Select(s => new ProductCategoryDto()
+            {
+                Id = s.Id,
+                CreationDate = s.CreationDate,
+                SeoData = s.SeoData,
+                Slug = s.Slug,
+                Title = s.Title
+            }).ToListAsync();
 
-                }).FirstOrDefaultAsync();
-            var subCategory =await context.Categories.Where(s => s.Id == product.SubCategory.Id)
-                .Select(s => new ProductCategoryDto()
-                {
-                    Id = s.Id,
-                    CreationDate = s.CreationDate,
-                    SeoData = s.SeoData,
-                    Slug = s.Slug,
-                    Title = s.Title
-
-                }).FirstOrDefaultAsync();
             if (product.SecendrySubCategory != null)
             {
-                var secendryCategory =await context.Categories.Where(s => s.Id == product.SecendrySubCategory.Id)
+                var secendryCategory = await context.Categories.Where(s => s.Id == product.SecendrySubCategory.Id)
                .Select(s => new ProductCategoryDto()
                {
                    Id = s.Id,
@@ -105,13 +95,12 @@ namespace Shop.Query.Products
                 if (secendryCategory != null)
                     product.SecendrySubCategory = secendryCategory;
             }
-            if (category != null)
-                product.Category = category;
 
-            if (subCategory != null)
-                product.SubCategory = subCategory;
 
-           
+            product.Category = categories.First(s => s.Id == product.Category.Id);
+            product.SubCategory = categories.First(s => s.Id == product.SubCategory.Id);
+
+
         }
     }
 }

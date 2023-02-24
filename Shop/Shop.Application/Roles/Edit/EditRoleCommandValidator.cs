@@ -1,11 +1,11 @@
 ﻿using Common.Application.Validation;
 using FluentValidation;
 
-namespace Shop.Application.Roles.Create
+namespace Shop.Application.Roles.Edit
 {
-    public class CreateRolePermissionCommandValidator : AbstractValidator<CreateRolePermissionCommand>
+    public class EditRoleCommandValidator : AbstractValidator<EditRoleCommand>
     {
-        public CreateRolePermissionCommandValidator()
+        public EditRoleCommandValidator()
         {
             RuleFor(r => r.Title)
                 .NotEmpty().WithMessage(ValidationMessages.required("عنوان"));

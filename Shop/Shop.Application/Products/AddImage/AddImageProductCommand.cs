@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Products.AddImage
 {
-    internal class AddImageProductCommand:IBaseCommand
+    public class AddImageProductCommand:IBaseCommand
     {
         public AddImageProductCommand(long productId, int sequence, IFormFile imageFile)
         {

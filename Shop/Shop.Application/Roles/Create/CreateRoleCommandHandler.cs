@@ -4,16 +4,16 @@ using Shop.Domain.RoleAgg.Repository;
 
 namespace Shop.Application.Roles.Create
 {
-    public class CreateRolePermissionCommandHandler : IBaseCommandHandler<CreateRolePermissionCommand>
+    public class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand>
     {
         private readonly IRoleRepository _roleRepository;
 
-        public CreateRolePermissionCommandHandler(IRoleRepository roleRepository)
+        public CreateRoleCommandHandler(IRoleRepository roleRepository)
         {
             _roleRepository = roleRepository;
         }
 
-        public async Task<OperationResult> Handle(CreateRolePermissionCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
             var permission = new List<RolePermission>();
 

@@ -5,16 +5,16 @@ using Shop.Query.Orders.DTOs;
 
 namespace Shop.Query.Orders.GetByFilter
 {
-    public class GetOrderByFilerQueryHandler : IQueryHandler<GetOrderByFilerQuery, OrderFilterResult>
+    public class GetOrderByFilterQueryHandler : IQueryHandler<GetOrderByFilterQuery, OrderFilterResult>
     {
         private readonly ShopContext _context;
 
-        public GetOrderByFilerQueryHandler(ShopContext context)
+        public GetOrderByFilterQueryHandler(ShopContext context)
         {
             _context = context;
         }
 
-        public async Task<OrderFilterResult> Handle(GetOrderByFilerQuery request, CancellationToken cancellationToken)
+        public async Task<OrderFilterResult> Handle(GetOrderByFilterQuery request, CancellationToken cancellationToken)
         {
             var result = _context.Orders.OrderByDescending(o => o.Id).AsQueryable();
             var @params = request.FilterParams;

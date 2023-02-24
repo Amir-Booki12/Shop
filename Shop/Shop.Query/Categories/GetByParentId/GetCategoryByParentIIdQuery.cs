@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Shop.Query.Categories.GetByParentId
 {
-    internal record GetCategoryByParentIIdQuery(long ParentId):IQuery<List<ChildCategoryDto>>;
+    public record GetCategoryByParentIIdQuery(long ParentId):IQuery<List<ChildCategoryDto>>;
 }
