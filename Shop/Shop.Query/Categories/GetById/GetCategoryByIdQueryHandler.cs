@@ -17,6 +17,8 @@ namespace Shop.Query.Categories.GetById
         public async Task<CategoryDto> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             var result = await _shopContex.Categories
+                .Include(s => s.Childs)
+                .ThenInclude(s => s.Childs)
                 .FirstOrDefaultAsync(f => f.Id == request.CategoryId, cancellationToken);
 
             return result.Map();

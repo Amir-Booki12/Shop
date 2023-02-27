@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Commom.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace Shop.Domain.UserAgg.Services
     public interface IDomainUserService
     {
         bool IsExistEmail(string email);
-        bool IsExistPhoneNumber(string phoneNumber);
+        bool IsExistPhoneNumber(PhoneNumber phoneNumber);
     }
 }

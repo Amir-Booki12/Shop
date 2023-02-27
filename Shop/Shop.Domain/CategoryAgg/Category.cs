@@ -15,7 +15,7 @@ namespace Shop.Domain.CategoryAgg
     {
         private Category()
         {
-
+            Childs = new List<Category>();
         }
         public string Title { get; private set; }
         public string Slug { get; private set; }

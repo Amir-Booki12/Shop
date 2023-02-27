@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
     <ProjectReference Include="..\Shop.Config\Shop.Config.csproj" />
+    <ProjectReference Include="..\Shop.Query\Shop.Query.csproj" />
   </ItemGroup>
 
 </Project>
