@@ -10,6 +10,6 @@ namespace Shop.Domain.UserAgg.Services
     public interface IDomainUserService
     {
         bool IsExistEmail(string email);
-        bool IsExistPhoneNumber(PhoneNumber phoneNumber);
+        bool IsExistPhoneNumber(string phoneNumber);
     }
 }

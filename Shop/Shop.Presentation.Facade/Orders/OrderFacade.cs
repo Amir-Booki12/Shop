@@ -25,7 +25,7 @@ namespace Shop.Presentation.Facade.Orders
             return await _mediator.Send(command);
         }
 
-        public async Task<OperationResult> OrderCheckOut(CheckOutOrderItemCommand command)
+        public async Task<OperationResult> OrderCheckOut(CheckOutOrderCommand command)
         {
             return await _mediator.Send(command);
         }
@@ -35,7 +35,7 @@ namespace Shop.Presentation.Facade.Orders
             return await _mediator.Send(command);
         }
 
-        public async Task<OperationResult> IncreaseItemCount(IncreaseOrderCountCommand command)
+        public async Task<OperationResult> IncreaseItemCount(IncreaseOrderItemCountCommand command)
         {
             return await _mediator.Send(command);
         }

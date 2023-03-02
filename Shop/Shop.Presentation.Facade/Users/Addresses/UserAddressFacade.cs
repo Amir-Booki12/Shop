@@ -3,6 +3,9 @@ using MediatR;
 using Shop.Application.Users.AddUserAddress;
 using Shop.Application.Users.DeleteUserAddress;
 using Shop.Application.Users.EditUserAddress;
+using Shop.Query.Users.Addresses.GetById;
+using Shop.Query.Users.Addresses.GetList;
+using Shop.Query.Users.DTOs;
 
 namespace Shop.Presentation.Facade.Users.Addresses
 {
@@ -32,9 +35,15 @@ namespace Shop.Presentation.Facade.Users.Addresses
 
         }
 
-       
+        public Task<AddressDto> GetById(long id)
+        {
+            return _mediator.Send(new GetUserAddressByIdQuery(id));
+        }
 
-       
+        public Task<List<AddressDto>> GetList(long userId)
+        {
+            return _mediator.Send(new GetUserAddressListQuery(userId));
+        }
     }
 }
 

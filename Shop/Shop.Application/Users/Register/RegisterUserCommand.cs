@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Users.Register
 {
-    public record RegisterUserCommand(PhoneNumber PhoneNumber,string Password):IBaseCommand;
+    public record RegisterUserCommand(string PhoneNumber,string Password):IBaseCommand;
 }

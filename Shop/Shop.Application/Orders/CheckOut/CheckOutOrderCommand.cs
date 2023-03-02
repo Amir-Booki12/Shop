@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Orders.CheckOut
 {
-    public class CheckOutOrderItemCommand : IBaseCommand
+    public class CheckOutOrderCommand : IBaseCommand
     {
         public long UserId { get; private set; }
         public string City { get; private set; }
@@ -19,7 +19,7 @@ namespace Shop.Application.Orders.CheckOut
         public string Family { get; private set; }
         public string PhoneNumber { get; private set; }
 
-        public CheckOutOrderItemCommand(long userId, string city, string shire, string postalCode, string postAddress,
+        public CheckOutOrderCommand(long userId, string city, string shire, string postalCode, string postAddress,
            string nationalCode, string name, string family, string phoneNumber)
         {
             UserId = userId;

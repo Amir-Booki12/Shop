@@ -1,5 +1,6 @@
 ﻿using Common.Application;
 using Shop.Application.SiteEntities.Banners.Create;
+using Shop.Application.SiteEntities.Banners.Delete;
 using Shop.Application.SiteEntities.Banners.Edit;
 using Shop.Query.SiteEntiteis.Banners.DTOs;
 using System;
@@ -14,7 +15,8 @@ namespace Shop.Presentation.Facade.SiteEntiteis.Banners
     {
         Task<OperationResult> CreateBanner(CreateBannerCommand command);
         Task<OperationResult> EditBanner(EditBannerCommand command);
-        
+        Task<OperationResult> DeleteBanner(long bannerId);
+
         Task<BannerDto?> GetBannerById(long id);
         Task<List<BannerDto>> GetBanners();
     }

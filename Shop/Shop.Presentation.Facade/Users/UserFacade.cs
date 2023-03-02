@@ -1,6 +1,7 @@
 ﻿using Commom.Domain.ValueObjects;
 using Common.Application;
 using MediatR;
+using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Application.Users.Register;
@@ -47,11 +48,14 @@ namespace Shop.Presentation.Facade.Users
             return await _mediator.Send(new GetUserByFilterQuery(filterParams));
         }
 
-        public async Task<UserDto?> GetUserByPhoneNumber(PhoneNumber phoneNumber)
+        public async Task<UserDto?> GetUserByPhoneNumber(string phoneNumber)
         {
             return await _mediator.Send(new GetUserByPhoneNumberQuery(phoneNumber));
         }
 
-       
+        public async Task<OperationResult> AddToken(AddUserTokenCommand command)
+        {
+            return await _mediator.Send(command);
+        }
     }
 }

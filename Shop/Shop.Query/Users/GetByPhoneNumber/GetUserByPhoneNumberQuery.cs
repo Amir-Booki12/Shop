@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace Shop.Query.Users.GetByPhoneNumber
 {
-    public record GetUserByPhoneNumberQuery(PhoneNumber PhoneNumber):IQuery<UserDto>;
+    public record GetUserByPhoneNumberQuery(string PhoneNumber):IQuery<UserDto>;
 }

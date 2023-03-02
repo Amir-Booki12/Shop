@@ -2,6 +2,7 @@
 using Shop.Application.Users.AddUserAddress;
 using Shop.Application.Users.DeleteUserAddress;
 using Shop.Application.Users.EditUserAddress;
+using Shop.Query.Users.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,9 @@ namespace Shop.Presentation.Facade.Users.Addresses
 
         Task<OperationResult> EditAddress(EditAddressUserCommand command);
         Task<OperationResult> DeleteAddress(DeleteUserAddressCommand command);
+        Task<AddressDto> GetById(long id);
+        Task<List<AddressDto>> GetList(long userId);
+
     }
 }
 

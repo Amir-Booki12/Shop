@@ -1,7 +1,9 @@
 ﻿using Common.Application;
+using Common.Application.SecurityUtil;
 using Shop.Domain.UserAgg;
 using Shop.Domain.UserAgg.Repository;
 using Shop.Domain.UserAgg.Services;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Shop.Application.Users.Register
 {
@@ -18,7 +20,7 @@ namespace Shop.Application.Users.Register
 
         public async Task<OperationResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var user = User.Register(request.PhoneNumber, request.Password, _domainUserService);
+            var user = User.Register(request.PhoneNumber,Sha256Hasher.Hash(request.Password), _domainUserService);
             _userRepository.Add(user);
             await _userRepository.Save();
             return OperationResult.Success();

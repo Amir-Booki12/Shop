@@ -17,8 +17,9 @@ namespace Shop.Query.Users.DTOs
         public string Password { get;  set; }
         public string AvatarName { get;  set; }
         public string Email { get;  set; }
+        public bool IsActive { get;  set; }
        
-        public PhoneNumber PhoneNumber { get;  set; }
+        public string PhoneNumber { get;  set; }
         public Gender Gender { get;  set; }
         public List<UserRoleDto> UserRoles { get;  set; }
     }
@@ -34,7 +35,7 @@ namespace Shop.Query.Users.DTOs
         public string Family { get; set; }
         public string AvatarName { get; set; }
         public string Email { get; set; }
-        public PhoneNumber PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public Gender Gender { get; set; }
     }
     
@@ -42,7 +43,7 @@ namespace Shop.Query.Users.DTOs
     {
         public long? Id { get; set; }
         public string? Email { get; set; }
-        public PhoneNumber? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
     }
     public class UserFilterResult:BaseFilter<UserFilterData,UserFilterParams>
     {

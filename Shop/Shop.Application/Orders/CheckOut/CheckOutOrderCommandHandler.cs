@@ -4,16 +4,16 @@ using Shop.Domain.OrderAgg.Repository;
 
 namespace Shop.Application.Orders.CheckOut
 {
-    public class CheckOutOrderItemCommandHandler : IBaseCommandHandler<CheckOutOrderItemCommand>
+    public class CheckOutOrderCommandHandler : IBaseCommandHandler<CheckOutOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
 
-        public CheckOutOrderItemCommandHandler(IOrderRepository orderRepository)
+        public CheckOutOrderCommandHandler(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
         }
 
-        public async Task<OperationResult> Handle(CheckOutOrderItemCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Handle(CheckOutOrderCommand request, CancellationToken cancellationToken)
         {
             var currentOrder = await _orderRepository.GetCurrentUserOrder(request.UserId);
 

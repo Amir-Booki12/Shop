@@ -26,7 +26,7 @@ namespace Shop.Application.SiteEntities.Banners.Edit
             if (request.ImageFile != null)
             {
                 currentImageName =await _fileService.SaveFileAndGenerateName(request.ImageFile,
-                    Directories.BannerImgaes);
+                    Directories.BannerImages);
             }
             banner.Edit(request.Link, currentImageName, request.Position);
            await _bannerRepository.Save();
@@ -39,7 +39,7 @@ namespace Shop.Application.SiteEntities.Banners.Edit
         {
             if(imgaeFile != null)
             {
-                _fileService.DeleteFile(Directories.BannerImgaes,oldImage);
+                _fileService.DeleteFile(Directories.BannerImages, oldImage);
             }
         }
     }

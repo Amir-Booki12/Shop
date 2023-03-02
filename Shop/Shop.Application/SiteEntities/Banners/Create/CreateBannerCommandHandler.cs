@@ -19,7 +19,7 @@ namespace Shop.Application.SiteEntities.Banners.Create
 
         public async Task<OperationResult> Handle(CreateBannerCommand request, CancellationToken cancellationToken)
         {
-            var imageName =await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.BannerImgaes);
+            var imageName =await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.BannerImages);
             var banner = new Banner(request.Link, imageName, request.Position);
 
             _bannerRepository.Add(banner);

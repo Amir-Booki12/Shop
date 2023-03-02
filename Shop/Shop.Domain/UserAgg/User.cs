@@ -19,7 +19,7 @@ namespace Shop.Domain.UserAgg
         {
 
         }
-        public User(string name, string family, string password, string email, PhoneNumber phoneNumber, Gender gender,IDomainUserService domainService)
+        public User(string name, string family, string password, string email, string phoneNumber, Gender gender,IDomainUserService domainService)
         {
             Guard(email, phoneNumber, domainService);
             Name = name;
@@ -29,21 +29,28 @@ namespace Shop.Domain.UserAgg
             PhoneNumber = phoneNumber;
             Gender = gender;
             AvatarName = "avatar.png";
+            IsActive = true;
+            Addresses = new();
+            Wallets = new();
+            Tokens = new();
+
         }
 
         public string Name { get; private set; }
         public string Family { get; private set; }
         public string Password { get; private set; }
         public string AvatarName { get; private set; }
+        public bool IsActive { get; private set; }
         public string Email { get; private set; }
         [NotMapped]
-        public PhoneNumber PhoneNumber { get; private set; }
+        public string PhoneNumber { get; private set; }
         public Gender Gender { get; private set; }
         public List<UserAddress> Addresses { get; private set; }
         public List<Wallet> Wallets { get; private set; }
         public List<UserRole> UserRoles { get; private set; }
+        public List<UserToken> Tokens { get; private set; }
 
-        public void Edit(string name, string family, string email, PhoneNumber phoneNumber,
+        public void Edit(string name, string family, string email, string phoneNumber,
             Gender gender, IDomainUserService domainService)
         {
             Guard(email, phoneNumber, domainService);
@@ -94,16 +101,26 @@ namespace Shop.Domain.UserAgg
             Wallets.Add(wallet);
         }
 
-        public static User Register(PhoneNumber phoneNumber,string password,IDomainUserService domainService)
+        public static User Register(string phoneNumber,string password,IDomainUserService domainService)
         {
             return new User("","", password, "", phoneNumber,Gender.None, domainService);
         }
 
-        public void Guard(string email, PhoneNumber phoneNumber, IDomainUserService domainService)
+        public void AddToken(string hashJwtToken, string hashJwtRefreshToken,
+            DateTime expireDateToken, DateTime expireDateRefreshToken, string device)
         {
-            NullOrEmptyDomainDataException.CheckString(email, nameof(email));
-            
-           
+            var activeTokenCount = Tokens.Count(c => c.ExpireDateRefreshToken > DateTime.Now);
+            if (activeTokenCount == 3)
+                throw new InvalidDomainDataException("امکان استفاده از 4 دستگاه وجود ندارد");
+            var userToken = new UserToken(hashJwtToken, hashJwtRefreshToken, expireDateToken, expireDateRefreshToken, device);
+            userToken.UserId = Id;
+            Tokens.Add(userToken);
+        }
+        public void Guard(string email, string phoneNumber, IDomainUserService domainService)
+        {
+            NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
+
+
 
             if (EmailValidation.IsValidEmail(email) == false)
                 throw new InvalidDomainDataException("ایمیل معتبر نیست");

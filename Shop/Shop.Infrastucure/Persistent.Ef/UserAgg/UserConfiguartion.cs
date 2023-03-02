@@ -42,6 +42,18 @@ namespace Shop.Infrastucture.Persistent.Ef.UserAgg
                 .IsRequired()
                 .HasMaxLength(50);
 
+            builder.OwnsMany(b => b.Tokens, option =>
+            {
+                option.ToTable("Tokens","user");
+                option.HasKey(s => s.Id);
+                option.Property(b => b.HashJwtToken)
+                .HasMaxLength(250);
+                option.Property(b => b.HashJwtRefreshToken)
+               .HasMaxLength(250);
+                option.Property(b => b.Device)
+               .HasMaxLength(150);
+            });
+
             builder.OwnsMany(b => b.Addresses, option =>
             {
                 option.HasIndex(b => b.UserId);

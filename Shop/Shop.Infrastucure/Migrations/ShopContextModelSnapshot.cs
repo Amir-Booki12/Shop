@@ -326,6 +326,9 @@ namespace Shop.Infrastucture.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
@@ -843,6 +846,51 @@ namespace Shop.Infrastucture.Migrations
                                 .HasForeignKey("UserId");
                         });
 
+                    b.OwnsMany("Shop.Domain.UserAgg.UserToken", "Tokens", b1 =>
+                        {
+                            b1.Property<long>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("bigint");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Device")
+                                .IsRequired()
+                                .HasMaxLength(150)
+                                .HasColumnType("nvarchar(150)");
+
+                            b1.Property<DateTime>("ExpireDateRefreshToken")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime>("ExpireDateToken")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("HashJwtRefreshToken")
+                                .IsRequired()
+                                .HasMaxLength(250)
+                                .HasColumnType("nvarchar(250)");
+
+                            b1.Property<string>("HashJwtToken")
+                                .IsRequired()
+                                .HasMaxLength(250)
+                                .HasColumnType("nvarchar(250)");
+
+                            b1.Property<long>("UserId")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("UserId");
+
+                            b1.ToTable("Tokens", "user");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
                     b.OwnsMany("Shop.Domain.UserAgg.Wallet", "Wallets", b1 =>
                         {
                             b1.Property<long>("UserId")
@@ -884,6 +932,8 @@ namespace Shop.Infrastucture.Migrations
                         });
 
                     b.Navigation("Addresses");
+
+                    b.Navigation("Tokens");
 
                     b.Navigation("UserRoles");
 

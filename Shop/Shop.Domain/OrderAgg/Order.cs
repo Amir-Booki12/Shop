@@ -63,7 +63,7 @@ namespace Shop.Domain.OrderAgg
             }
             Items.Add(item);
         }
-        public void RemoveItem(int itemId)
+        public void RemoveItem(long itemId)
         {
             ChangeOrderGuard();
             var order = Items.FirstOrDefault(i=>i.Id == itemId);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Orders.RemoveItem
 {
-    public record RemoveOrderItemCommand(long UserId, int ItemId) : IBaseCommand;
+    public record RemoveOrderItemCommand(long UserId, long ItemId) : IBaseCommand;
 
     public class RemoveOrderItemCommandHandler : IBaseCommandHandler<RemoveOrderItemCommand>
     {

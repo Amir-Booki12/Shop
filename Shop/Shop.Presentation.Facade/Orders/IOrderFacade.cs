@@ -16,9 +16,9 @@ namespace Shop.Presentation.Facade.Orders
     public interface IOrderFacade
     {
         Task<OperationResult> AddOrderItem(AddOrderItemCommand command);
-        Task<OperationResult> OrderCheckOut(CheckOutOrderItemCommand command);
+        Task<OperationResult> OrderCheckOut(CheckOutOrderCommand command);
         Task<OperationResult> RemoveOrderItem(RemoveOrderItemCommand command);
-        Task<OperationResult> IncreaseItemCount(IncreaseOrderCountCommand command);
+        Task<OperationResult> IncreaseItemCount(IncreaseOrderItemCountCommand command);
         Task<OperationResult> DecreaseItemCount(DecreaseOrderItemCountCommand command);
        
 

@@ -11,7 +11,7 @@ namespace Shop.Application.Users.Create
 {
     public class CreateUserCommand:IBaseCommand
     {
-        public CreateUserCommand(string name, string family, string password, string email, PhoneNumber phoneNumber, Gender gender)
+        public CreateUserCommand(string name, string family, string password, string email, string phoneNumber, Gender gender)
         {
             Name = name;
             Family = family;
@@ -25,7 +25,7 @@ namespace Shop.Application.Users.Create
         public string Family { get; private set; }
         public string Password { get; private set; }
         public string Email { get; private set; }
-        public PhoneNumber PhoneNumber { get; private set; }
+        public string PhoneNumber { get; private set; }
         public Gender Gender { get; private set; }
     }
 }

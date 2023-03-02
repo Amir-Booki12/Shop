@@ -7,7 +7,7 @@ namespace Shop.Application.Users.Register
     {
         public RegisterUserCommandValidator()
         {
-            RuleFor(r => r.Password)
+            RuleFor(r => r.PhoneNumber)
                 .NotEmpty().WithMessage(ValidationMessages.required("شماره تلفن"))
                 .NotNull().WithMessage(ValidationMessages.required("شماره تلفن"))
                 .MinimumLength(4).WithMessage(ValidationMessages.required("شماره تلفن"));
