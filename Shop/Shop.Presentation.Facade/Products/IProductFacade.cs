@@ -23,6 +23,7 @@ namespace Shop.Presentation.Facade.Products
         Task<ProductDto?> GetProductBySlug(string slug);
 
         Task<ProductFilterResult> GetProductsByFilter(ProductFilterParam filterParams);
-        
+        Task<ProductShopResult> GetProductsForShop(ProductShopFilterParam filterParams);
+
     }
 }

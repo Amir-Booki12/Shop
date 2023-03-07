@@ -2,6 +2,9 @@
 using MediatR;
 using Shop.Application.Sellers.AddInvertory;
 using Shop.Application.Sellers.EditInvertory;
+using Shop.Query.Sellers.DTOs;
+using Shop.Query.Sellers.Invertories.GetById;
+using Shop.Query.Sellers.Invertories.GetList;
 
 namespace Shop.Presentation.Facade.Sellers.Inventoreis
 {
@@ -22,6 +25,15 @@ namespace Shop.Presentation.Facade.Sellers.Inventoreis
         public async Task<OperationResult> EditInventory(EditInvertoryCommand command)
         {
             return await _mediator.Send(command);
+        }
+        public async Task<InventoryDto?> GetById(long inventoryId)
+        {
+            return await _mediator.Send(new GetSellerInventoryByIdQuery(inventoryId));
+        }
+
+        public async Task<List<InventoryDto>> GetList(long sellerId)
+        {
+            return await _mediator.Send(new GetInventoriesQuery(sellerId));
         }
     }
 }

@@ -17,7 +17,6 @@ namespace Shop.Query.Sellers.DTOs
         public string NationalCode { get;  set; }     
         public SellerStatus Status { get;  set; }
     }
-
     public class SellerFilterParam:BaseFilterParam
     {
         public string ShopName { get; set; }

@@ -42,7 +42,13 @@ namespace Shop.Api.Controllers
             return QueryResult(result);
         }
 
-
+        [Authorize]
+        [HttpGet("current")]
+        public async Task<ApiResult<SellerDto?>> GetSeller()
+        {
+            var result = await _sellerFacade.GetSellerByUserId(User.GetUserId());
+            return QueryResult(result);
+        }
         [PermissionChecker(PermissionType.Seller_Management)]
         [HttpPost]
 
@@ -80,7 +86,25 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
+        [HttpGet("Inventory")]
+        [PermissionChecker(PermissionType.Seller_Panel)]
+        public async Task<ApiResult<List<InventoryDto>>> GetInventories()
+        {
+            var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
+            if (seller == null)
+                return QueryResult(new List<InventoryDto>());
 
+            var result = await _sellerInventoryFacade.GetList(seller.Id);
+            return QueryResult(result);
+        }
+        [HttpGet("Inventory/{inventoryId}")]
+        public async Task<ApiResult<InventoryDto>> GetInventoryById(long inventoryId)
+        {
+            var result = await _sellerInventoryFacade.GetById(inventoryId);
+            if (result == null)
+                return QueryResult(new InventoryDto());
+            return QueryResult(result);
+        }
 
     }
 }
