@@ -11,6 +11,8 @@ using Shop.Query.Sellers.DTOs;
 using System.Security;
 using Shop.Application.Sellers.AddInvertory;
 using Shop.Application.Sellers.EditInvertory;
+using Shop.Api.Infrastructure.Security;
+using Shop.Domain.RoleAgg.Enums;
 
 namespace Shop.Api.Controllers
 {
@@ -24,8 +26,9 @@ namespace Shop.Api.Controllers
             _sellerInventoryFacade = sellerInventoryFacade;
         }
 
+        [PermissionChecker(PermissionType.Seller_Management)]
         [HttpGet]
-        
+
         public async Task<ApiResult<SellerFilterResult>> GetSellers(SellerFilterParam filterParams)
         {
             var result = await _sellerFacade.GetSellersByFilter(filterParams);
@@ -39,18 +42,19 @@ namespace Shop.Api.Controllers
             return QueryResult(result);
         }
 
-       
 
+        [PermissionChecker(PermissionType.Seller_Management)]
         [HttpPost]
-        
+
         public async Task<ApiResult> CreateSeller(CreateSellerCommand command)
         {
             var result = await _sellerFacade.CreateSeller(command);
             return CommandResult(result);
         }
 
+        [PermissionChecker(PermissionType.Seller_Management)]
         [HttpPut]
-        
+
 
         public async Task<ApiResult> EditSeller(EditSellerCommand command)
         {
@@ -58,22 +62,25 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
+        [PermissionChecker(PermissionType.Add_Inventory)]
         [HttpPost("Inventory")]
-        
+
         public async Task<ApiResult> AddInventory(AddInvertoryCommand command)
         {
             var result = await _sellerInventoryFacade.AddInventory(command);
             return CommandResult(result);
         }
+
+        [PermissionChecker(PermissionType.Edit_Inventory)]
         [HttpPut("Inventory")]
-        
+
         public async Task<ApiResult> EditInventory(EditInvertoryCommand command)
         {
             var result = await _sellerInventoryFacade.EditInventory(command);
             return CommandResult(result);
         }
 
-       
+
 
     }
 }

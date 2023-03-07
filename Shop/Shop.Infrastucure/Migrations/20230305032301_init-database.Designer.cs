@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Shop.Infrastucture.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20230305032301_init-database")]
+    partial class initdatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,19 +340,11 @@ namespace Shop.Infrastucture.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique();
 
                     b.ToTable("Users", "user");
                 });
@@ -800,6 +794,31 @@ namespace Shop.Infrastucture.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
+
+                            b1.OwnsOne("Commom.Domain.ValueObjects.PhoneNumber", "PhoneNumber", b2 =>
+                                {
+                                    b2.Property<long>("UserAddressUserId")
+                                        .HasColumnType("bigint");
+
+                                    b2.Property<long>("UserAddressId")
+                                        .HasColumnType("bigint");
+
+                                    b2.Property<string>("Value")
+                                        .IsRequired()
+                                        .HasMaxLength(11)
+                                        .HasColumnType("nvarchar(11)")
+                                        .HasColumnName("PhoneNumber");
+
+                                    b2.HasKey("UserAddressUserId", "UserAddressId");
+
+                                    b2.ToTable("Addresses", "user");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("UserAddressUserId", "UserAddressId");
+                                });
+
+                            b1.Navigation("PhoneNumber")
+                                .IsRequired();
                         });
 
                     b.OwnsMany("Shop.Domain.UserAgg.UserRole", "UserRoles", b1 =>

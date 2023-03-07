@@ -7,8 +7,8 @@ namespace Shop.Application.Users.Create
     {
         public CreateUserCommandValidator()
         {
-            RuleFor(r => r.Email)
-                .NotEmpty().WithMessage(ValidationMessages.required("ایمیل"))
+            RuleFor(r => r.PhoneNumber)
+                .NotEmpty().WithMessage(ValidationMessages.required("شماره تلفن"))
                 .NotNull()
                 .EmailAddress();
 

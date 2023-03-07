@@ -38,12 +38,13 @@ namespace Shop.Domain.UserAgg
 
         public string Name { get; private set; }
         public string Family { get; private set; }
+        public string PhoneNumber { get; private set; }
         public string Password { get; private set; }
         public string AvatarName { get; private set; }
         public bool IsActive { get; private set; }
         public string Email { get; private set; }
-        [NotMapped]
-        public string PhoneNumber { get; private set; }
+        
+        
         public Gender Gender { get; private set; }
         public List<UserAddress> Addresses { get; private set; }
         public List<Wallet> Wallets { get; private set; }
@@ -116,20 +117,34 @@ namespace Shop.Domain.UserAgg
             userToken.UserId = Id;
             Tokens.Add(userToken);
         }
+
+        public void RemoveToken(long tokenId)
+        {
+            var token = Tokens.FirstOrDefault(s => s.Id == tokenId);
+            if (token == null)
+                throw new InvalidDomainDataException();
+            Tokens.Remove(token);
+
+        }
         public void Guard(string email, string phoneNumber, IDomainUserService domainService)
         {
             NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
 
+            if (phoneNumber.Length != 11)
+                throw new InvalidDomainDataException("شماره موبایل نامعتبر است");
 
+            if (!string.IsNullOrWhiteSpace(email))
+                if (email.IsValidEmail() == false)
+                    throw new InvalidDomainDataException(" ایمیل  نامعتبر است");
 
-            if (EmailValidation.IsValidEmail(email) == false)
-                throw new InvalidDomainDataException("ایمیل معتبر نیست");
+            if (phoneNumber != PhoneNumber)
+                if (domainService.IsExistPhoneNumber(phoneNumber))
+                    throw new InvalidDomainDataException("شماره موبایل تکراری است");
 
-            if (Email != email)
+            if (email != Email)
                 if (domainService.IsExistEmail(email))
                     throw new InvalidDomainDataException("ایمیل تکراری است");
 
-            
         }
     }
 }

@@ -2,13 +2,16 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.SiteEntities.Sliders.Create;
 using Shop.Application.SiteEntities.Sliders.Edit;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.SiteEntiteis.Sliders;
 using Shop.Query.SiteEntiteis.Sliders.DTOs;
 
 namespace Shop.Api.Controllers
 {
+    [PermissionChecker(PermissionType.CRUD_Slider)]
     public class SliderController : ApiController
     {
         private readonly ISliderFacade _facade;

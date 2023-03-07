@@ -24,9 +24,9 @@ namespace Shop.Infrastucture.Persistent.Ef.UserAgg
 
             builder.Property(b => b.PhoneNumber)
                 .IsRequired()
-                .HasMaxLength(11)
-                ;
-            builder.Ignore(b => b.PhoneNumber);
+                .HasMaxLength(11);
+                
+            
 
 
             builder.Property(b => b.Name)
@@ -78,13 +78,7 @@ namespace Shop.Infrastucture.Persistent.Ef.UserAgg
                 option.Property(b => b.PostalCode)
                     .IsRequired().HasMaxLength(20);
 
-                option.OwnsOne(c => c.PhoneNumber, config =>
-                {
-                    config.Property(b => b.Value)
-                        .HasColumnName("PhoneNumber")
-                        .IsRequired().HasMaxLength(11);
-                        
-                });
+              
             });
 
             builder.OwnsMany(b => b.Wallets, option =>

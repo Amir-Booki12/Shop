@@ -1,19 +1,22 @@
 ﻿using Common.Application;
 using Common.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.Categories.AddChild;
 using Shop.Application.Categories.Create;
 using Shop.Application.Categories.Edit;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Categoreis;
 using Shop.Query.Categories.DTOs;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Security;
 
 namespace Shop.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [PermissionChecker(PermissionType.Category_Management)]
     public class CategoryController : ApiController
     {
        private readonly ICategoryFacade _categoryFacade;
@@ -22,21 +25,21 @@ namespace Shop.Api.Controllers
         {
             _categoryFacade = categoryFacade;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ApiResult<List<CategoryDto>>> GetCategories()
         {
            var result = await _categoryFacade.GetAllCategories();
             return QueryResult(result);
         }
-
-         [HttpGet("getChild/{parentId}")]
+        [AllowAnonymous]
+        [HttpGet("getChild/{parentId}")]
         public async Task<ApiResult<List<ChildCategoryDto>>> GetChildCategori(long parentId)
         {
            var result = await _categoryFacade.GetCategoryByParentId(parentId);
             return QueryResult(result);
         }
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ApiResult<CategoryDto>> GetCategoriById(long id)
         {

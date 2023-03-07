@@ -1,12 +1,16 @@
 ﻿using Common.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.Comments.ChengeStatus;
 using Shop.Application.Comments.Create;
 using Shop.Application.Comments.Delete;
 using Shop.Application.Comments.Edit;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Comments;
 using Shop.Query.Comments.DTOs;
+using System.Security;
 
 namespace Shop.Api.Controllers
 {
@@ -20,23 +24,24 @@ namespace Shop.Api.Controllers
             _commentFacade = commentFacade;
         }
 
-        
+        [PermissionChecker(PermissionType.Comment_Management)]
         [HttpGet]
+        [Authorize]
         public async Task<ApiResult<CommentFilterResult>> GetCommentByFilter([FromQuery] CommentFilterParams filterParams)
         {
             var result = await _commentFacade.GetCommentsByFilter(filterParams);
             return QueryResult(result);
         }
         [HttpGet("productComments")]
-       
 
+        [PermissionChecker(PermissionType.Comment_Management)]
         [HttpGet("{commentId}")]
         public async Task<ApiResult<CommentDto?>> GetCommentById(long commentId)
         {
             var result = await _commentFacade.GetCommentById(commentId);
             return QueryResult(result);
         }
-
+        [Authorize]
         [HttpPost]
         
         public async Task<ApiResult> CreateComment(CreateCommentCommand command)
@@ -44,7 +49,7 @@ namespace Shop.Api.Controllers
             var result = await _commentFacade.CreateComment(command);
             return CommandResult(result);
         }
-
+        [Authorize]
         [HttpPut]
         
         public async Task<ApiResult> EditComment(EditCommentCommand command)
@@ -53,6 +58,8 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
+        [Authorize]
+        [PermissionChecker(PermissionType.Comment_Management)]
         [HttpPut("changeStatus")]
        
         public async Task<ApiResult> ChangeCommentStatus(ChengeStatusCommentCommand command)
@@ -61,6 +68,7 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
+        [Authorize]
         [HttpDelete("{commentId}")]
         
         public async Task<ApiResult> DeleteComment(long commentId)

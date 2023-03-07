@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Shop.Api.Infrastructure.JwtUtil
 {
-    public static class JwtAuthenticationConfig
+    public  static class JwtAuthenticationConfig
     {
-        public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public  static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(option =>
             {
@@ -27,7 +27,16 @@ namespace Shop.Api.Infrastructure.JwtUtil
                     ValidateAudience = true
                 };
                 option.SaveToken = true;
-               
+                option.Events = new JwtBearerEvents()
+                {
+                       OnTokenValidated= async context =>
+                       {
+                           var customValidate = context.HttpContext.RequestServices
+                           .GetRequiredService<CustomJwtValidation>();
+
+                           await customValidate.Validate(context);
+                       }
+                };
                 
             });
         }
